@@ -7,6 +7,15 @@ TMPDIR=${TMPDIR:-/tmp}
 DISTRO=focal
 MIRROR=http://archive.ubuntu.com/ubuntu/
 
+PACKAGES=(
+    uwsgi-core
+    uwsgi-plugin-php
+    php-mbstring
+    php-mysql
+    php-pgsql
+)
+
+
 set +u
 if [ -z "$2" ]; then
     WORKDIR=`mktemp -d -p $TMPDIR`
@@ -21,7 +30,7 @@ debootstrap \
     --arch=amd64 \
     --variant=minbase \
     --components=main,universe \
-    --include=uwsgi-core,uwsgi-plugin-php \
+    --include=$(IFS=',' ; echo "${PACKAGES[*]}") \
     $DISTRO \
     $WORKDIR \
     $MIRROR
