@@ -1,25 +1,14 @@
 #! /bin/bash
 
-set -euo pipefail
+set -Eeuo pipefail
 
 PORTABLE_IMAGE=${1:-tt-rss.raw}
 TMPDIR=${TMPDIR:-/tmp}
 DISTRO=focal
 MIRROR=http://archive.ubuntu.com/ubuntu/
 
-PACKAGES=(
-    ca-certificates
-    uwsgi-core
-    uwsgi-plugin-php
-    php-mbstring
-    php-mysql
-    php-pgsql
-    php-xml
-    php-intl
-    php-gd
-    php-curl
-)
-EXCLUDE=(e2fsprogs fdisk sysvinit-utils login bsdutils)
+mapfile -t PACKAGES < packages.list
+EXCLUDE_PACKAGES=(e2fsprogs fdisk sysvinit-utils login bsdutils)
 
 set +u
 if [ -z "$2" ]; then
@@ -31,15 +20,21 @@ fi
 set -u
 
 ## bootstrap a minimal ubuntu + uwsgi + php
+debootstrapArgs=(
+    --arch=amd64
+    --variant=minbase
+    --components=main,universe
+    --exclude=$(IFS=',' ; echo "${EXCLUDE_PACKAGES[*]}")
+    --include=$(IFS=',' ; echo "${PACKAGES[*]}")
+)
+if [ -n "${CACHE_DIR:-}" ]; then
+    mkdir -p $CACHE_DIR
+    debootstrapArgs+=(--cache-dir=$CACHE_DIR)
+fi
+
 debootstrap \
-    --arch=amd64 \
-    --variant=minbase \
-    --components=main,universe \
-    --exclude=$(IFS=',' ; echo "${EXCLUDE[*]}") \
-    --include=$(IFS=',' ; echo "${PACKAGES[*]}") \
-    $DISTRO \
-    $WORKDIR \
-    $MIRROR
+    "${debootstrapArgs[@]}" \
+    $DISTRO $WORKDIR $MIRROR
 
 
 ## download and unpack tiny tiny rss
@@ -48,18 +43,15 @@ tar xf /tmp/tt-rss.tgz -C $WORKDIR/srv
 
 
 ## copy config files
-cp tt-rss.ini $WORKDIR/srv
-cp tt-rss.service tt-rss.socket tt-rss-update.service $WORKDIR/etc/systemd/system/
-cp config.php $WORKDIR/srv/tt-rss
+cp files/tt-rss.ini $WORKDIR/srv
+cp files/tt-rss.service files/tt-rss.socket files/tt-rss-update.service $WORKDIR/etc/systemd/system/
+cp files/config.php $WORKDIR/srv/tt-rss
 
 ## some basic file paths required in a portable service image
 touch $WORKDIR/etc/machine-id $WORKDIR/etc/resolv.conf
 mkdir -p $WORKDIR/var/lib/tt-rss
 
-## clean-ups - these just take up space
-rm -rf $WORKDIR/usr/share/man $WORKDIR/usr/share/doc $WORKDIR/usr/share/info $WORKDIR/usr/share/locale $WORKDIR/var/cache/apt/archives/*.deb
-
-mksquashfs $WORKDIR "$PORTABLE_IMAGE" -all-root -noappend
+mksquashfs $WORKDIR "$PORTABLE_IMAGE" -all-root -root-mode 755 -noappend -ef exclude.list -wildcards
 
 ## probably remove workdir here
 # rm -rf $WORKDIR

@@ -1,0 +1,9 @@
+usr/share/man
+usr/share/doc
+usr/share/info
+usr/share/locale
+var/cache/apt/archives/*.deb
+var/cache/apt/archives/*.bin
+var/lib/apt/lists/*Packages*
+var/lib/apt/lists/*Release*
+var/log/*log

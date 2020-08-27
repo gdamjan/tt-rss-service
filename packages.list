@@ -1,0 +1,10 @@
+ca-certificates
+uwsgi-core
+uwsgi-plugin-php
+php-mbstring
+php-mysql
+php-pgsql
+php-xml
+php-intl
+php-gd
+php-curl
