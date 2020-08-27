@@ -6,7 +6,13 @@ Requires=tt-rss.socket
 Type=notify
 EnvironmentFile=/etc/tt-rss/config.env
 StateDirectory=tt-rss
-ExecStart=/usr/bin/uwsgi --ini /srv/tt-rss.ini:nginx
+ExecStartPre=/bin/mkdir -p \
+        /var/lib/tt-rss/lock \
+        /var/lib/tt-rss/cache/images \
+        /var/lib/tt-rss/cache/upload \
+        /var/lib/tt-rss/cache/export \
+        /var/lib/tt-rss/feed-icons
+ExecStart=/usr/bin/uwsgi --ini /srv/tt-rss.ini:systemd
 Restart=always
 
 [Install]
