@@ -41,9 +41,7 @@ SELF_URL_PATH=https://tt-rss.example.net
 
 Look at `build.sh`, it's a shell script that builds a minimal ubuntu file-system with uwsgi, php and tt-rss included.
 Then, on top of that, it adds the uwsgi config file, a tt-rss config file and the systemd service and socket units.
-You can run the script locally too (with `sudo`), it will generate `./tt-rss.raw` in the current directory.
-
-Attach it with  `portablectl attach --runtime ./tt-rss.raw`, and detach it with `portablectl detach --runtime tt-rss`.
+You can run the script locally too, it will generate `./tt-rss.raw` in the current directory.
 
 To build locally, just run `sudo ./build.sh tt-rss.raw image-workdir` (it needs sudo for debootstrap). Then you can play
 with the image with:
