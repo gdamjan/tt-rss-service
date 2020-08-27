@@ -1,0 +1,9 @@
+[Unit]
+Description=tt-rss socket
+
+[Socket]
+ListenStream=/run/tt-rss.sock
+SocketMode=0666
+
+[Install]
+WantedBy=sockets.target
