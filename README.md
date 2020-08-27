@@ -1,8 +1,8 @@
-![Make a release](https://github.com/gdamjan/tt-rss-service/workflows/Make%20a%20release/badge.svg)
+[![Build Status](https://github.com/gdamjan/tt-rss-service/workflows/Make%20a%20release/badge.svg)](https://github.com/gdamjan/tt-rss-service/actions)
 
 # `TinyTiny RSS as a systemd portable service`
 
-Build a [Tiny Tiny RSS](https://tt-rss.org/) image for a systemd [portable service](https://systemd.io/PORTABLE_SERVICES/).
+Build an immutable [Tiny Tiny RSS](https://tt-rss.org/) image for a systemd [portable service](https://systemd.io/PORTABLE_SERVICES/).
 
 ## Quick Start
 
@@ -10,11 +10,11 @@ Get the latest image from [Github release](https://github.com/gdamjan/tt-rss-ser
 `/var/lib/portables` and then run:
 
 ```sh
-portablectl attach --enable --now tt-rss.raw
+portablectl attach --enable --now tt-rss
 ```
 
 The service has to be configured in the `/etc/tt-rss/config.env` file before it's started, see bellow.
-State will be kept in `/var/lib/private/tt-rss`.
+All state will be kept in `/var/lib/private/tt-rss`.
 
 The running service is available via the `/run/tt-rss.sock` uwsgi
 socket that can be used in nginx.
@@ -29,11 +29,11 @@ Example:
 ```
 DB_TYPE=mysql
 DB_HOST=localhost
+DB_NAME=ttrss
 DB_USER=tt-rss
-DB_NAME=tt-rss
 DB_PASS=tt-rss
 DB_PORT=3306
-SELF_URL_PATH=https://tt-rss.example.net
+SELF_URL_PATH=http://localhost:8080/
 ```
 
 
@@ -47,9 +47,35 @@ To build locally, just run `sudo ./build.sh tt-rss.raw image-workdir` (it needs 
 with the image with:
 
 ```
-portablectl attach --runtime ./tt-rss.raw
+portablectl attach --now --runtime ./tt-rss.raw
 systemctl cat tt-rss.service tt-rss.socket
 systemctl start tt-rss.service
 systemctl stop tt-rss.service
-portablectl detach --runtime tt-rss
+portablectl detach --now --runtime tt-rss
+```
+
+To play around you can add the following two files:
+
+```
+# /etc/systemd/system/tt-rss.socket.d/override.conf
+[Socket]
+ListenStream=8080
+```
+
+```
+# /etc/systemd/system/tt-rss.service.d/override.conf
+[Service]
+Environment=UWSGI_PROTOCOL=http
+```
+
+Then run `systemctl daemon-reload` and `systemctl restart tt-rss.service tt-rss.socket`.
+You can now open http://localhost:8080 in your browser.
+
+You can also use [nspawn](https://www.freedesktop.org/software/systemd/man/systemd-nspawn.html) to look around in the
+image, but note that since the image is immutable you can't really change much there.
+
+Some examples:
+```
+sudo systemd-nspawn -i ./tt-rss.raw php -i
+sudo systemd-nspawn -i ./tt-rss.raw bash
 ```
