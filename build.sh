@@ -49,7 +49,7 @@ tar xf /tmp/tt-rss.tgz -C $WORKDIR/srv
 
 ## copy config files
 cp tt-rss.ini $WORKDIR/srv
-cp tt-rss.service tt-rss.socket $WORKDIR/etc/systemd/system/
+cp tt-rss.service tt-rss.socket tt-rss-update.service $WORKDIR/etc/systemd/system/
 cp config.php $WORKDIR/srv/tt-rss
 
 ## some basic file paths required in a portable service image

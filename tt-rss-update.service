@@ -1,0 +1,14 @@
+[Unit]
+Description=tt-rss update service
+After=tt-rss.service
+
+[Service]
+Type=simple
+User=tt-rss
+EnvironmentFile=/etc/tt-rss/config.env
+StateDirectory=tt-rss
+ExecStart=/usr/bin/php /srv/tt-rss/update_daemon2.php
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
