@@ -8,13 +8,18 @@ DISTRO=focal
 MIRROR=http://archive.ubuntu.com/ubuntu/
 
 PACKAGES=(
+    ca-certificates
     uwsgi-core
     uwsgi-plugin-php
     php-mbstring
     php-mysql
     php-pgsql
+    php-xml
+    php-intl
+    php-gd
+    php-curl
 )
-
+EXCLUDE=(e2fsprogs fdisk sysvinit-utils login bsdutils)
 
 set +u
 if [ -z "$2" ]; then
@@ -30,6 +35,7 @@ debootstrap \
     --arch=amd64 \
     --variant=minbase \
     --components=main,universe \
+    --exclude=$(IFS=',' ; echo "${EXCLUDE[*]}") \
     --include=$(IFS=',' ; echo "${PACKAGES[*]}") \
     $DISTRO \
     $WORKDIR \
