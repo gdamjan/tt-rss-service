@@ -57,6 +57,9 @@ touch $WORKDIR/etc/machine-id $WORKDIR/etc/resolv.conf
 mkdir -p $WORKDIR/var/lib/tt-rss
 
 ## clean-ups - these just take up space
-rm -rf $WORKDIR/var/cache $WORKDIR/usr/share/man
+rm -rf $WORKDIR/usr/share/man $WORKDIR/usr/share/doc $WORKDIR/usr/share/info $WORKDIR/usr/share/locale $WORKDIR/var/cache/apt/archives/*.deb
 
 mksquashfs $WORKDIR "$PORTABLE_IMAGE" -all-root -noappend
+
+## probably remove workdir here
+# rm -rf $WORKDIR
