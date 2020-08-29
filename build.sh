@@ -51,7 +51,8 @@ cp files/config.php $WORKDIR/srv/tt-rss
 touch $WORKDIR/etc/machine-id $WORKDIR/etc/resolv.conf
 mkdir -p $WORKDIR/var/lib/tt-rss
 
-mksquashfs $WORKDIR "$PORTABLE_IMAGE" -all-root -root-mode 755 -noappend -ef exclude.list -wildcards
+chmod 755 $WORKDIR
+mksquashfs $WORKDIR "$PORTABLE_IMAGE" -all-root -noappend -ef exclude.list -wildcards
 
 ## probably remove workdir here
 # rm -rf $WORKDIR
