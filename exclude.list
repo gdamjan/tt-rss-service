@@ -3,7 +3,11 @@ usr/share/doc
 usr/share/info
 usr/share/locale
 var/cache/apt/archives/*.deb
-var/cache/apt/archives/*.bin
+var/cache/apt/*.bin
 var/lib/apt/lists/*Packages*
 var/lib/apt/lists/*Release*
 var/log/*log
+var/cache/debconf
+var/lib/pacman/sync/*
+usr/include
+usr/share/i18n
