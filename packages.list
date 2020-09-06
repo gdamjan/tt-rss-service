@@ -1,3 +1,1 @@
-uwsgi-plugin-php
-php-pgsql
-php-gd
+uwsgi
