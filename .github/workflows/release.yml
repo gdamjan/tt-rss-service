@@ -18,10 +18,13 @@ jobs:
 
     - run: nix-build
 
+    - run: |
+        cp result tt-rss.raw
+
     - name: Create a github release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: result
+        files: tt-rss.raw
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
