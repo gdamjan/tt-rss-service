@@ -10,8 +10,12 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2.3.1
+    - uses: actions/checkout@v2
+
     - uses: cachix/install-nix-action@v10
+      with:
+        nix_path: nixpkgs=https://github.com/gdamjan/nixpkgs/archive/fix-uwsgi-php-try3.tar.gz
+
     - run: nix-build
 
     - name: Create a github release
