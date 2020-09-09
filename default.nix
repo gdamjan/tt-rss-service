@@ -44,7 +44,7 @@ in pkgs.stdenv.mkDerivation {
 
   buildCommand =
     ''
-      closureInfo=${pkgs.closureInfo { rootPaths = [ uwsgi-php tt-rss ]; }}
+      closureInfo=${pkgs.closureInfo { rootPaths = [ uwsgi-php tt-rss pkgs.coreutils ]; }}
       cp $closureInfo/registration nix-path-registration
 
       mkdir -p nix/store
