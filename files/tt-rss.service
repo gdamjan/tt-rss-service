@@ -1,0 +1,20 @@
+[Unit]
+Description=tt-rss uwsgi service
+Requires=tt-rss.socket
+
+[Service]
+Type=notify
+EnvironmentFile=/etc/tt-rss/config.env
+StateDirectory=tt-rss
+ExecStartPre=/bin/mkdir -p \
+        /var/lib/tt-rss/lock \
+        /var/lib/tt-rss/cache/images \
+        /var/lib/tt-rss/cache/upload \
+        /var/lib/tt-rss/cache/export \
+        /var/lib/tt-rss/feed-icons
+ExecStart=/usr/bin/uwsgi --ini /srv/tt-rss.ini:systemd
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+Also=tt-rss.socket

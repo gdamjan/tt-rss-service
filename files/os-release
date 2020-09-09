@@ -1,0 +1,4 @@
+PORTABLE_PRETTY_NAME="Portable TinyTiny RSS with uwsgi-php"
+PORTABLE_ID=portable-tt-rss
+PRETTY_NAME=NixOS
+ID=nixos
