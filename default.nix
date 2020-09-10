@@ -20,7 +20,7 @@ let
         php = php;
     };
 
-    squash-compression = "zstd";
+    squash-compression = "xz -Xdict-size 100%";
 
 in pkgs.stdenv.mkDerivation {
   name = "tt-rss.raw";
@@ -44,6 +44,7 @@ in pkgs.stdenv.mkDerivation {
       cp ${./files/tt-rss.socket} etc/systemd/system/tt-rss.socket
       cp ${./files/tt-rss-update.service} etc/systemd/system/tt-rss-update.service
       cp ${./files/tt-rss.ini} srv/tt-rss.ini
+
 
       ln -s ${tt-rss} srv/tt-rss
       ln -s ${uwsgi-php}/bin/uwsgi usr/bin/uwsgi
