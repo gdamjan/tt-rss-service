@@ -1,20 +1,10 @@
 [uwsgi]
-; default for local testing run it like "uwsgi --ini tt-rss.ini"
-ini = :tt-rss
-http-socket = :8000
-
-[systemd]
-; for production running from systemd with socket activation, run it like "uwsgi --ini tt-rss.ini:systemd"
-ini = :tt-rss
-die-on-term = true
-plugins = systemd_logger
-logger = systemd
-
-[tt-rss]
 master = true
 processes = 2
+die-on-term = true
+logger = @uwsgiLogger@
 
-site-root = /srv/tt-rss
+site-root = @ttRss@
 chdir = %(site-root)
 
 static-check = %(site-root)
@@ -24,6 +14,7 @@ static-skip-ext = .inc
 offload-threads = 2
 
 plugins = 0:php
+php-ini = @php@/lib/php.ini
 php-docroot = %(site-root)
 php-index = index.php
 php-allowed-ext = .php

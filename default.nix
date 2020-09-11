@@ -1,34 +1,57 @@
 { pkgs ? import <nixpkgs> {} }:
 
 let
-    tt-rss = (import ./tt-rss.nix { inherit pkgs; });
-    php = (pkgs.php.override {
-        embedSupport = true;
-        cliSupport = true;
-        cgiSupport = false;
-        fpmSupport = false;
-        phpdbgSupport = false;
-        systemdSupport = false;
-        apxs2Support = false;
-    }).withExtensions ({ all, ... }: with all;
-        [pdo pdo_pgsql pgsql mbstring fileinfo intl xml json curl posix gd opcache session]);
+  squash-compression = "xz -Xdict-size 100%";
+  withSystemd = true;
+  uwsgiLogger = if withSystemd then "systemd" else "stdio";
 
-    uwsgi-php = pkgs.uwsgi.override {
-        withPAM = false;
-        withSystemd = true;
-        plugins = ["php"];
-        php = php;
-    };
+  ttRss = (import ./tt-rss.nix { inherit pkgs; });
 
-    squash-compression = "xz -Xdict-size 100%";
+  php = (pkgs.php.override {
+    embedSupport = true;
+    cliSupport = true;
+    cgiSupport = false;
+    fpmSupport = false;
+    phpdbgSupport = false;
+    systemdSupport = false;
+    apxs2Support = false;
+  }).withExtensions ({ all, ... }: with all;
+    [mysqli mysqlnd pdo pdo_mysql pcntl posix mbstring fileinfo intl dom xml json curl gd opcache session]);
 
-in pkgs.stdenv.mkDerivation {
+  uwsgi = pkgs.uwsgi.override {
+    withPAM = false;
+    withSystemd = withSystemd;
+    plugins = ["php"];
+    php = php;
+  };
+
+  rootfs = pkgs.stdenv.mkDerivation rec {
+    name = "rootfs";
+    inherit uwsgi php ttRss uwsgiLogger;
+    coreutils = pkgs.coreutils;
+    buildCommand = ''
+        # prepare the portable service file-system layout
+        mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp
+        touch $out/etc/resolv.conf $out/etc/machine-id
+        cp ${./files/os-release} $out/etc/os-release
+
+        # create an empty directory as a mount point for StateDir
+        mkdir -p $out/var/lib/tt-rss
+        substituteAll ${./files/tt-rss.ini.in} $out/tt-rss.ini
+        substituteAll ${./files/tt-rss-update.service.in} $out/etc/systemd/system/tt-rss-update.service
+        substituteAll ${./files/tt-rss.service.in} $out/etc/systemd/system/tt-rss.service
+        cp ${./files/tt-rss.socket} $out/etc/systemd/system/tt-rss.socket
+    '';
+  };
+
+in
+
+pkgs.stdenv.mkDerivation {
   name = "tt-rss.raw";
   nativeBuildInputs = [ pkgs.squashfsTools ];
 
-  buildCommand =
-    ''
-      closureInfo=${pkgs.closureInfo { rootPaths = [ uwsgi-php tt-rss pkgs.coreutils ]; }}
+  buildCommand = ''
+      closureInfo=${pkgs.closureInfo { rootPaths = [ rootfs ]; }}
       cp $closureInfo/registration nix-path-registration
 
       mkdir -p nix/store
@@ -36,25 +59,16 @@ in pkgs.stdenv.mkDerivation {
         cp -a "$i" "''${i:1}"
       done
 
-      # prepare the portable service file-system
-      mkdir -p etc/systemd/system var/lib/tt-rss proc sys dev run tmp var/tmp srv usr/bin bin
-      touch etc/resolv.conf etc/machine-id
-      cp ${./files/os-release} etc/os-release
-      cp ${./files/tt-rss.service} etc/systemd/system/tt-rss.service
-      cp ${./files/tt-rss.socket} etc/systemd/system/tt-rss.socket
-      cp ${./files/tt-rss-update.service} etc/systemd/system/tt-rss-update.service
-      cp ${./files/tt-rss.ini} srv/tt-rss.ini
-
-
-      ln -s ${tt-rss} srv/tt-rss
-      ln -s ${uwsgi-php}/bin/uwsgi usr/bin/uwsgi
-      ln -s ${php}/bin/php usr/bin/php
-      ln -s ${pkgs.coreutils}/bin/mkdir bin/mkdir
-
-
-      mksquashfs . $out \
+      # archive the nix store
+      mksquashfs nix $out \
+        -noappend \
+        -keep-as-directory \
         -all-root -root-mode 755 \
         -b 1048576 -comp ${squash-compression} \
         -ef ${./exclude.list} -wildcards
-    '';
+
+      # and now add the rootfs layout
+      mksquashfs ${rootfs} $out \
+        -all-root -root-mode 755
+  '';
 }
