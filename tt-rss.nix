@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, php }:
 
 pkgs.stdenv.mkDerivation rec {
     pname = "tt-rss";
@@ -10,9 +10,10 @@ pkgs.stdenv.mkDerivation rec {
       sha256 = "12gybaawwx8pgshj7lcpwm98waj7cqyy2jp5hsa3m9bnsd23rhld";
     };
 
+    phpBin = php + "/bin/php";
     installPhase = ''
       mkdir $out
       cp -ra * $out/
-      cp ${./files/config.php} $out/config.php
+      substituteAll ${./files/config.php.in} $out/config.php
     '';
 }

@@ -5,7 +5,7 @@ let
   withSystemd = true;
   uwsgiLogger = if withSystemd then "systemd" else "stdio";
 
-  ttRss = (import ./tt-rss.nix { inherit pkgs; });
+  ttRss = (import ./tt-rss.nix { inherit pkgs php; });
 
   php = (pkgs.php.override {
     embedSupport = true;
