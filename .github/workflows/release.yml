@@ -20,11 +20,12 @@ jobs:
 
     - run: |
         cp result tt-rss_${GITHUB_REF#refs/tags/}.raw
+        sha256sum tt-rss_${GITHUB_REF#refs/tags/}.raw > tt-rss_${GITHUB_REF#refs/tags/}.raw.sha256
 
     - name: Create a github release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: tt-rss_*.raw
+        files: tt-rss_*.raw*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
