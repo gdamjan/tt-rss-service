@@ -37,7 +37,7 @@ let
         cp ${./files/os-release} $out/etc/os-release
 
         # create an empty directory as a mount point for StateDir
-        mkdir -p $out/var/lib/tt-rss
+        mkdir -p $out/var/lib/tt-rss $out/etc/ssl/certs
         substituteAll ${./files/tt-rss.ini.in} $out/tt-rss.ini
         substituteAll ${./files/tt-rss-update.service.in} $out/etc/systemd/system/tt-rss-update.service
         substituteAll ${./files/tt-rss.service.in} $out/etc/systemd/system/tt-rss.service

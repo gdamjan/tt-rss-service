@@ -18,6 +18,8 @@ ExecStartPre=@coreutils@/bin/mkdir -p \
         /var/lib/tt-rss/feed-icons
 ExecStart=@uwsgi@/bin/uwsgi --ini /tt-rss.ini
 Restart=always
+MemoryDenyWriteExecute=no
+BindReadOnlyPaths=/etc/ssl/certs/
 
 [Install]
 WantedBy=multi-user.target
