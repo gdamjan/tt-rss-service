@@ -15,5 +15,6 @@ pkgs.stdenv.mkDerivation rec {
       mkdir $out
       cp -ra * $out/
       substituteAll ${./files/config.php.in} $out/config.php
+      echo ${version}-${rev} > $out/version_static.txt
     '';
 }
