@@ -4,6 +4,7 @@ processes = 2
 die-on-term = true
 logger = @uwsgiLogger@
 
+mime-file = @mimeTypes@
 site-root = @ttRss@
 chdir = %(site-root)
 

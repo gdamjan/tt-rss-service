@@ -29,6 +29,7 @@ let
     name = "rootfs";
     inherit uwsgi php ttRss uwsgiLogger;
     coreutils = pkgs.coreutils;
+    mimeTypes = pkgs.mime-types + "/etc/mime.types";
     buildCommand = ''
         # prepare the portable service file-system layout
         mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp
