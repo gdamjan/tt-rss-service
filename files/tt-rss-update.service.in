@@ -3,13 +3,12 @@ Description=tt-rss update service
 After=tt-rss.service
 
 [Service]
-Type=simple
+Type=oneshot
 DynamicUser=yes
 User=tt-rss
 StateDirectory=tt-rss
 EnvironmentFile=/etc/tt-rss/config.env
-ExecStart=@php@/bin/php @ttRss@/update_daemon2.php
-Restart=always
+ExecStart=@php@/bin/php @ttRss@/update.php --feeds
 
 [Install]
 WantedBy=multi-user.target
