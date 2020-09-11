@@ -16,7 +16,7 @@ let
     systemdSupport = false;
     apxs2Support = false;
   }).withExtensions ({ all, ... }: with all;
-    [mysqli mysqlnd pdo pdo_mysql pcntl posix mbstring fileinfo intl dom xml json curl gd opcache session]);
+    [mysqli mysqlnd pdo pdo_mysql pcntl posix mbstring fileinfo intl dom json curl gd opcache session]);
 
   uwsgi = pkgs.uwsgi.override {
     withPAM = false;
