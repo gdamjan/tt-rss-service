@@ -4,9 +4,10 @@ After=tt-rss.service
 
 [Service]
 Type=simple
+DynamicUser=yes
 User=tt-rss
-EnvironmentFile=/etc/tt-rss/config.env
 StateDirectory=tt-rss
+EnvironmentFile=/etc/tt-rss/config.env
 ExecStart=@php@/bin/php @ttRss@/update_daemon2.php
 Restart=always
 

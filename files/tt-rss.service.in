@@ -1,11 +1,15 @@
 [Unit]
 Description=tt-rss uwsgi service
 Requires=tt-rss.socket
+After=tt-rss.socket
+Before=tt-rss-update.service
 
 [Service]
 Type=notify
-EnvironmentFile=/etc/tt-rss/config.env
+DynamicUser=yes
+User=tt-rss
 StateDirectory=tt-rss
+EnvironmentFile=/etc/tt-rss/config.env
 ExecStartPre=@coreutils@/bin/mkdir -p \
         /var/lib/tt-rss/lock \
         /var/lib/tt-rss/cache/images \
