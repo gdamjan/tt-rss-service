@@ -1,8 +1,7 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> {}, withSystemd ? true }:
 
 let
   squash-compression = "xz -Xdict-size 100%";
-  withSystemd = true;
   uwsgiLogger = if withSystemd then "systemd" else "stdio";
 
   ttRss = (import ./tt-rss.nix { inherit pkgs php; });
