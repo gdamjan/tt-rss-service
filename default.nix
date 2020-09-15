@@ -31,9 +31,10 @@ let
     mimeTypes = pkgs.mime-types + "/etc/mime.types";
     buildCommand = ''
         # prepare the portable service file-system layout
-        mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp
+        mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp $out/bin
         touch $out/etc/resolv.conf $out/etc/machine-id
         cp ${./files/os-release} $out/etc/os-release
+        ln -s ${pkgs.bash}/bin/bash $out/bin/sh
 
         # create an empty directory as a mount point for StateDir
         mkdir -p $out/var/lib/tt-rss $out/etc/ssl/certs
