@@ -18,7 +18,8 @@ jobs:
 
     - run: nix-build
 
-    - run: |
+    - name: Prepare release files
+      run: |
         cp result tt-rss_${GITHUB_REF#refs/tags/}.raw
         sha256sum tt-rss_${GITHUB_REF#refs/tags/}.raw > tt-rss_${GITHUB_REF#refs/tags/}.raw.sha256
 
