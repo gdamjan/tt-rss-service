@@ -22,14 +22,3 @@ php-allowed-ext = .php
 php-allowed-ext = .inc
 
 php-set = date.timezone=CET
-
-# configure php constants from environment variables and then unset them so they don't leak
-php-constant = DB_TYPE=$(DB_TYPE)
-php-constant = DB_HOST=$(DB_HOST)
-php-constant = DB_PORT=$(DB_PORT)
-php-constant = DB_NAME=$(DB_NAME)
-php-constant = DB_USER=$(DB_USER)
-php-constant = DB_PASS=$(DB_PASS)
-unenv = DB_HOST
-unenv = DB_PORT
-unenv = DB_PASS
