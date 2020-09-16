@@ -54,7 +54,6 @@ pkgs.stdenv.mkDerivation {
 
   buildCommand = ''
       closureInfo=${pkgs.closureInfo { rootPaths = [ rootfs ]; }}
-      cp $closureInfo/registration nix-path-registration
 
       mkdir -p nix/store
       for i in $(< $closureInfo/store-paths); do
