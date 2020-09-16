@@ -16,7 +16,7 @@ ExecStartPre=@coreutils@/bin/mkdir -p \
         /var/lib/tt-rss/cache/upload \
         /var/lib/tt-rss/cache/export \
         /var/lib/tt-rss/feed-icons
-ExecStart=@uwsgi@/bin/uwsgi --ini /tt-rss.ini
+ExecStart=@uwsgi@/bin/uwsgi --ini /etc/tt-rss.ini
 Restart=always
 MemoryDenyWriteExecute=no
 BindReadOnlyPaths=/etc/ssl/certs/
