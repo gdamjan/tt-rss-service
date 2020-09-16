@@ -1,6 +1,7 @@
 [Unit]
 Description=tt-rss update service
 After=tt-rss.service
+Wants=tt-rss-update.timer
 
 [Service]
 Type=oneshot
@@ -14,3 +15,4 @@ BindReadOnlyPaths=/etc/ssl/certs/
 
 [Install]
 WantedBy=multi-user.target
+Also=tt-rss-update.timer
