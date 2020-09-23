@@ -2,12 +2,14 @@
 
 pkgs.stdenv.mkDerivation rec {
     pname = "tt-rss";
-    version = "2020-09-15";
-    rev = "4a074111b5bce126724bf06c9dc83880432e74c9";
+    version = "2020-09-23";
+    rev = "d0ed7890df949669261f52235151c93cf324714e";
+    sha256 = "1b2fczd41bqg9bq37r99svrqswr9qrp35m6gn3nz032yqcwc22ij";
 
     src = pkgs.fetchurl {
       url = "https://git.tt-rss.org/git/tt-rss/archive/${rev}.tar.gz";
-      sha256 = "0yyr4lhrs2vncmsdwfdin5fcb1hjgjidvdr296d3af2wz8gsknkk";
+      sha256 = sha256;
+      curlOpts = "--user-agent Mozilla-5.0";
     };
 
     phpBin = php + "/bin/php";
