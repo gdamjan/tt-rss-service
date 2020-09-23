@@ -39,7 +39,7 @@
 	// background processes while not running tt-rss, this method is generally
 	// viable to keep your feeds up to date.
 	// Still, there are more robust (and recommended) updating methods
-	// available, you can read about them here: http://tt-rss.org/wiki/UpdatingFeeds
+	// available, you can read about them here: https://tt-rss.org/wiki/UpdatingFeeds
 
 	// *****************************
 	// *** Files and directories ***
@@ -59,8 +59,8 @@
 	define('CACHE_DIR', $state_dir . '/cache');
 	// Local cache directory for RSS feed content.
 
-	define('ICONS_DIR', $state_dir . "/feed-icons");
-	define('ICONS_URL', "feed-icons");
+	define('ICONS_DIR', $state_dir . '/feed-icons');
+	define('ICONS_URL', 'feed-icons');
 	// Local and URL path to the directory, where feed favicons are stored.
 	// Unless you really know what you're doing, please keep those relative
 	// to tt-rss main directory.
