@@ -1,6 +1,7 @@
 [uwsgi]
 master = true
-processes = 2
+processes = 8
+cheaper = 2
 die-on-term = true
 logger = @uwsgiLogger@
 
@@ -9,6 +10,7 @@ site-root = @ttRss@
 chdir = %(site-root)
 
 static-check = %(site-root)
+static-index = index.html
 static-map = /feed-icons=/var/lib/tt-rss/feed-icons
 static-skip-ext = .php
 static-skip-ext = .inc
