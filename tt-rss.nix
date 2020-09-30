@@ -2,9 +2,9 @@
 
 pkgs.stdenv.mkDerivation rec {
     pname = "tt-rss";
-    version = "2020-09-23";
-    rev = "d0ed7890df949669261f52235151c93cf324714e";
-    sha256 = "1b2fczd41bqg9bq37r99svrqswr9qrp35m6gn3nz032yqcwc22ij";
+    version = "2020-10-01";
+    rev = "8a02a728c8726f65efb78a1f07911b8e4065b4ef";
+    sha256 = "0bfhdnhxh8rdn9pdz7gvjjlw3vnsj0yxg2k2ckz2ws6pshcbm7ap";
 
     src = pkgs.fetchurl {
       url = "https://git.tt-rss.org/git/tt-rss/archive/${rev}.tar.gz";
