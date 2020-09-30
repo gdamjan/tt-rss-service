@@ -42,7 +42,6 @@ let
         substituteAll ${./files/tt-rss-update.service.in} $out/etc/systemd/system/tt-rss-update.service
         substituteAll ${./files/tt-rss.service.in} $out/etc/systemd/system/tt-rss.service
         cp ${./files/tt-rss.socket} $out/etc/systemd/system/tt-rss.socket
-        cp ${./files/tt-rss-update.timer} $out/etc/systemd/system/tt-rss-update.timer
     '';
   };
 

@@ -1,18 +1,16 @@
 [Unit]
 Description=tt-rss update service
 After=tt-rss.service
-Wants=tt-rss-update.timer
 
 [Service]
-Type=oneshot
+Type=simple
 DynamicUser=yes
 User=tt-rss
 StateDirectory=tt-rss
 EnvironmentFile=/etc/tt-rss/config.env
-ExecStart=@php@/bin/php @ttRss@/update.php --feeds
+ExecStart=@php@/bin/php @ttRss@/update_daemon2.php
 MemoryDenyWriteExecute=no
 BindReadOnlyPaths=/etc/ssl/certs/
 
 [Install]
 WantedBy=multi-user.target
-Also=tt-rss-update.timer
