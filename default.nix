@@ -39,6 +39,9 @@ let
         ln -s ${php}/bin/php $out/usr/bin/php
         ln -s usr/bin $out/bin
 
+        mkdir -p $out/srv
+        ln -s ${ttRss} $out/srv/tt-rss
+
         # create empty directories as mount points for the services
         mkdir -p $out/var/lib/tt-rss $out/etc/tt-rss $out/etc/ssl/certs
         substituteAll ${./files/tt-rss.ini.in} $out/etc/tt-rss.ini
