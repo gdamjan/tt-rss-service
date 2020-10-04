@@ -8,6 +8,7 @@ Before=tt-rss-update.service
 Type=notify
 DynamicUser=yes
 User=tt-rss
+ConfigurationDirectory=tt-rss
 StateDirectory=tt-rss
 EnvironmentFile=/etc/tt-rss/config.env
 ExecStartPre=@coreutils@/bin/mkdir -p \
