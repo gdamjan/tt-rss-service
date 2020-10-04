@@ -10,7 +10,6 @@ DynamicUser=yes
 User=tt-rss
 ConfigurationDirectory=tt-rss
 StateDirectory=tt-rss
-EnvironmentFile=/etc/tt-rss/config.env
 ExecStartPre=@coreutils@/bin/mkdir -p \
         /var/lib/tt-rss/lock \
         /var/lib/tt-rss/cache/images \

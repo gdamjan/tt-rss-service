@@ -8,7 +8,6 @@ DynamicUser=yes
 User=tt-rss
 ConfigurationDirectory=tt-rss
 StateDirectory=tt-rss
-EnvironmentFile=/etc/tt-rss/config.env
 ExecStart=@php@/bin/php @ttRss@/update_daemon2.php
 MemoryDenyWriteExecute=no
 BindReadOnlyPaths=/etc/ssl/certs/
