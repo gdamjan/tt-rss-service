@@ -3,7 +3,6 @@
 	// *** Database configuration (important!) ***
 	// *******************************************
 
-	$state_dir = getenv('STATE_DIRECTORY');
 	define('DB_TYPE', getenv('DB_TYPE')); // pgsql or mysql
 	define('DB_HOST', getenv('DB_HOST')); putenv('DB_HOST'); unset($_SERVER['DB_HOST']);
 	define('DB_USER', getenv('DB_USER'));
@@ -44,6 +43,8 @@
 	// *****************************
 	// *** Files and directories ***
 	// *****************************
+
+	$state_dir = getenv('STATE_DIRECTORY');
 
 	define('PHP_EXECUTABLE', '/usr/bin/php');
 	// Path to PHP *COMMAND LINE* executable, used for various command-line tt-rss
