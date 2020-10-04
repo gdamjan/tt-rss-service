@@ -39,8 +39,8 @@ let
         ln -s ${php}/bin/php $out/usr/bin/php
         ln -s usr/bin $out/bin
 
-        # create an empty directories as a mount point for StateDir and for system certificates
-        mkdir -p $out/var/lib/tt-rss $out/etc/ssl/certs
+        # create empty directories as mount points for the services
+        mkdir -p $out/var/lib/tt-rss $out/etc/tt-rss $out/etc/ssl/certs
         substituteAll ${./files/tt-rss.ini.in} $out/etc/tt-rss.ini
         substituteAll ${./files/tt-rss-update.service.in} $out/etc/systemd/system/tt-rss-update.service
         substituteAll ${./files/tt-rss.service.in} $out/etc/systemd/system/tt-rss.service

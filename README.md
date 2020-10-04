@@ -22,19 +22,19 @@ socket that can be used in nginx.
 
 ## Application configuration
 
-The service is configured by the `/etc/tt-rss/config.env`, which is a simple `Key=Value` file that sets the process
-environment. It is read by the [EnvironmentFile](https://www.freedesktop.org/software/systemd/man/systemd.exec.html#EnvironmentFile=)
-directive in the service.
+The service is configured by the `/etc/tt-rss/config.php` file (make sure it's mode 644, ie readable by the service),
+copy/paste the following snippet, and edit to your liking:
 
 Example:
 ```
-DB_TYPE=mysql
-DB_HOST=localhost
-DB_NAME=ttrss
-DB_USER=tt-rss
-DB_PASS=tt-rss
-DB_PORT=3306
-SELF_URL_PATH=http://localhost:8080/
+<?php
+    define('DB_TYPE', 'mysql'); // pgsql or mysql
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'ttrss');
+    define('DB_USER', 'tt-rss');
+    define('DB_PASS', 'tt-rss');
+    define('DB_PORT', '3306');
+    define('SELF_URL_PATH', 'http://localhost:8080/');
 ```
 
 ## Nginx configuration

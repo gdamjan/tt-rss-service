@@ -3,12 +3,8 @@
 	// *** Database configuration (important!) ***
 	// *******************************************
 
-	define('DB_TYPE', getenv('DB_TYPE')); // pgsql or mysql
-	define('DB_HOST', getenv('DB_HOST')); putenv('DB_HOST'); unset($_SERVER['DB_HOST']);
-	define('DB_USER', getenv('DB_USER'));
-	define('DB_NAME', getenv('DB_NAME'));
-	define('DB_PASS', getenv('DB_PASS')); putenv('DB_PASS'); unset($_SERVER['DB_PASS']);
-	define('DB_PORT', getenv('DB_PORT')); putenv('DB_PORT'); unset($_SERVER['DB_PORT']); // usually 5432 for PostgreSQL, 3306 for MySQL
+	// see README file
+	require_once "/etc/tt-rss/config.php";
 
 	define('MYSQL_CHARSET', 'UTF8');
 	// Connection charset for MySQL. If you have a legacy database and/or experience
@@ -17,14 +13,6 @@
 	// ***********************************
 	// *** Basic settings (important!) ***
 	// ***********************************
-
-	define('SELF_URL_PATH', getenv('SELF_URL_PATH'));
-	// This should be set to a fully qualified URL used to access
-	// your tt-rss instance over the net, such as: https://example.org/tt-rss/
-	// The value should be a constant string literal. Please don't use
-	// PHP server variables here - you might introduce security
-	// issues on your install and cause hard to debug problems.
-	// If your tt-rss instance is behind a reverse proxy, use the external URL.
 
 	define('SINGLE_USER_MODE', false);
 	// Operate in single user mode, disables all functionality related to
