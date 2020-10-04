@@ -12,7 +12,6 @@ pkgs.stdenv.mkDerivation rec {
       curlOpts = "--user-agent Mozilla-5.0";
     };
 
-    phpBin = php + "/bin/php";
     installPhase = ''
       mkdir $out
       cp -ra * $out/

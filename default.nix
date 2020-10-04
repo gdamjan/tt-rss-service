@@ -29,14 +29,17 @@ let
     inherit uwsgi php ttRss uwsgiLogger;
     coreutils = pkgs.coreutils;
     mimeTypes = pkgs.mime-types + "/etc/mime.types";
+
     buildCommand = ''
         # prepare the portable service file-system layout
-        mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp $out/bin
+        mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp $out/usr/bin
         touch $out/etc/resolv.conf $out/etc/machine-id
         cp ${./files/os-release} $out/etc/os-release
-        ln -s ${pkgs.bash}/bin/bash $out/bin/sh
+        ln -s ${pkgs.bash}/bin/bash $out/usr/bin/sh
+        ln -s ${php}/bin/php $out/usr/bin/php
+        ln -s usr/bin $out/bin
 
-        # create an empty directory as a mount point for StateDir
+        # create an empty directories as a mount point for StateDir and for system certificates
         mkdir -p $out/var/lib/tt-rss $out/etc/ssl/certs
         substituteAll ${./files/tt-rss.ini.in} $out/etc/tt-rss.ini
         substituteAll ${./files/tt-rss-update.service.in} $out/etc/systemd/system/tt-rss-update.service
