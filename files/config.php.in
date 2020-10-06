@@ -4,7 +4,8 @@
 	// *******************************************
 
 	// see README file
-	require_once "/etc/tt-rss/config.php";
+	$config_dir = getenv("CONFIGURATION_DIRECTORY");
+	require_once $config_dir . "/config.php";
 
 	define('MYSQL_CHARSET', 'UTF8');
 	// Connection charset for MySQL. If you have a legacy database and/or experience
