@@ -14,11 +14,13 @@ Get the latest image from a [Github release](https://github.com/gdamjan/tt-rss-s
 portablectl attach --enable --now tt-rss
 ```
 
-The service **has** to be configured in the `/etc/tt-rss/config.env` file before it's started, see bellow.
+The service **has** to be configured in the `/etc/tt-rss/config.php` file before it's started, see bellow.
 All state will be kept in `/var/lib/private/tt-rss`.
 
 The running service is available via the `/run/tt-rss.sock` uwsgi
-socket that can be used in nginx.
+socket that can be used in nginx. I choose to use an nginx out of the service
+so that it can be shared with other services, and it makes integration with LetsEncrypt/certbot easier.
+I also use an external database.
 
 ## Application configuration
 
