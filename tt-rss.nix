@@ -15,7 +15,7 @@ pkgs.stdenv.mkDerivation rec {
     installPhase = ''
       mkdir $out
       cp -ra * $out/
-      substituteAll ${./files/config.php.in} $out/config.php
+      cp ${./files/config.php} $out/config.php
       echo ${version}-${builtins.substring 0 8 rev} > $out/version_static.txt
     '';
 }
