@@ -47,6 +47,8 @@ let
         substituteAll ${./files/tt-rss.ini.in} $out/etc/tt-rss.ini
         substituteAll ${./files/tt-rss-update.service.in} $out/etc/systemd/system/tt-rss-update.service
         substituteAll ${./files/tt-rss.service.in} $out/etc/systemd/system/tt-rss.service
+        mkdir $out/etc/systemd/system/tt-rss.service.d/
+        cp ${./files/80-allow-memory-deny-write-execute.conf} $out/etc/systemd/system/tt-rss.service.d/80-allow-memory-deny-write-execute.conf
         cp ${./files/tt-rss.socket} $out/etc/systemd/system/tt-rss.socket
     '';
   };
