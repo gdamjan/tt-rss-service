@@ -4,7 +4,7 @@ let
   squash-compression = "xz -Xdict-size 100%";
   uwsgiLogger = if withSystemd then "systemd" else "stdio";
 
-  ttRss = (import ./tt-rss.nix { inherit pkgs php; });
+  ttRss = (import ./tt-rss.nix { inherit pkgs; });
 
   php = (pkgs.php.override {
     embedSupport = true;

@@ -1,4 +1,4 @@
-{ pkgs, php }:
+{ pkgs }:
 
 pkgs.stdenv.mkDerivation rec {
     pname = "tt-rss";
