@@ -14,31 +14,34 @@ Get the latest image from [Github releases](https://github.com/gdamjan/tt-rss-se
 portablectl attach --enable --now tt-rss
 ```
 
-The service **has** to be configured in the `/etc/tt-rss/config.php` file before it's started (see bellow).
+The service is configured in the `/etc/tt-rss/config.env` file.
 All state will be kept in `/var/lib/private/tt-rss`.
 
-## Application configuration
+## Service configuration
 
-The service is configured by the `/etc/tt-rss/config.php` file (make sure it's mode 644, ie. readable by the service),
-copy/paste the following snippet, and edit to your liking:
+The service is configured by the `/etc/tt-rss/config.env` file. It's a simple [KEY=VALUE
+file](https://www.freedesktop.org/software/systemd/man/systemd.exec.html#EnvironmentFile=).
 
 Example:
 ```
-<?php
-    define('DB_TYPE', 'mysql'); // pgsql or mysql
-    define('DB_HOST', 'localhost');
-    define('DB_NAME', 'ttrss');
-    define('DB_USER', 'tt-rss');
-    define('DB_PASS', 'tt-rss');
-    define('DB_PORT', '3306');
-    define('SELF_URL_PATH', 'http://localhost:8080/');
+TTRSS_SELF_URL_PATH=https://rss.example.com/
+TTRSS_SESSION_COOKIE_LIFETIME=2592000
+TTRSS_DB_TYPE=mysql
+TTRSS_DB_HOST=db.example.com
+TTRSS_DB_PORT=3306
+TTRSS_DB_NAME=ttrss
+TTRSS_DB_USER=ttrss
+TTRSS_DB_PASS=example password
 ```
+
+See https://git.tt-rss.org/fox/tt-rss/wiki/GlobalConfig for an explanation of the tt-rss configration system.
 
 ## External dependencies
 
-The running service doesn't have an http server, database nor certificates. It only exposes
-the `/run/tt-rss.sock` uwsgi protocol socket, which can be used with nginx. This means that you have
-to have nginx running on the "host", and a database running either on the same host or on a remote server.
+The running service doesn't have an http server, database nor certificates. It only includes the tt-rss application
+code, uwsgi with the php plugin, and the required php extensions. It exposes the `/run/tt-rss.sock` uwsgi
+protocol socket, which can be used with nginx. This means that you have
+to provide an nginx running on the "host", and a database running either on the same host or on a remote server.
 
 I choose to use nginx on the "host" so that it can be shared with other services, and it makes
 integration with LetsEncrypt/certbot easier. I personally also use a remote database server.

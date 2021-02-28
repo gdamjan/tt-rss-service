@@ -6,11 +6,16 @@ After=tt-rss.service
 Type=simple
 DynamicUser=yes
 User=tt-rss
-ConfigurationDirectory=tt-rss
-StateDirectory=tt-rss
-ExecStart=@php@/bin/php @ttRss@/update_daemon2.php
-MemoryDenyWriteExecute=no
+
 BindReadOnlyPaths=/etc/ssl/certs/
+StateDirectory=tt-rss
+Environment=TTRSS_ICONS_DIR=/var/lib/tt-rss/feed-icons
+Environment=TTRSS_CACHE_DIR=/var/lib/tt-rss/cache
+Environment=TTRSS_LOCK_DIRECTORY=/var/lib/tt-rss/lock
+EnvironmentFile=/etc/tt-rss/config.env
+
+ExecStart=@php@/bin/php @ttRss@/update_daemon2.php
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

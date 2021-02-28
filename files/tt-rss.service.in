@@ -8,18 +8,23 @@ Before=tt-rss-update.service
 Type=notify
 DynamicUser=yes
 User=tt-rss
-ConfigurationDirectory=tt-rss
+
+BindReadOnlyPaths=/etc/ssl/certs/
 StateDirectory=tt-rss
+Environment=TTRSS_ICONS_DIR=/var/lib/tt-rss/feed-icons
+Environment=TTRSS_CACHE_DIR=/var/lib/tt-rss/cache
+Environment=TTRSS_LOCK_DIRECTORY=/var/lib/tt-rss/lock
+EnvironmentFile=/etc/tt-rss/config.env
+
 ExecStartPre=@coreutils@/bin/mkdir -p \
         /var/lib/tt-rss/lock \
         /var/lib/tt-rss/cache/images \
         /var/lib/tt-rss/cache/upload \
         /var/lib/tt-rss/cache/export \
         /var/lib/tt-rss/feed-icons
+
 ExecStart=@uwsgi@/bin/uwsgi --ini /etc/tt-rss.ini
 Restart=always
-MemoryDenyWriteExecute=no
-BindReadOnlyPaths=/etc/ssl/certs/
 
 [Install]
 WantedBy=multi-user.target
