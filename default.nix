@@ -35,19 +35,14 @@ let
         mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp $out/usr/bin
         touch $out/etc/resolv.conf $out/etc/machine-id
         cp ${./files/os-release} $out/etc/os-release
-        ln -s ${pkgs.bash}/bin/bash $out/usr/bin/sh
         ln -s ${php}/bin/php $out/usr/bin/php
         ln -s usr/bin $out/bin
 
-        mkdir -p $out/srv
-        ln -s ${ttRss} $out/srv/tt-rss
-
         # create empty directories as mount points for the services
-        mkdir -p $out/var/lib/tt-rss $out/etc/tt-rss $out/etc/ssl/certs
+        mkdir -p $out/var/lib/tt-rss $out/etc/ssl/certs
         substituteAll ${./files/tt-rss.ini.in} $out/etc/tt-rss.ini
         substituteAll ${./files/tt-rss-update.service.in} $out/etc/systemd/system/tt-rss-update.service
         substituteAll ${./files/tt-rss.service.in} $out/etc/systemd/system/tt-rss.service
-        mkdir $out/etc/systemd/system/tt-rss.service.d/
         cp ${./files/tt-rss.socket} $out/etc/systemd/system/tt-rss.socket
     '';
   };
