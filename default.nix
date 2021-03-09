@@ -28,7 +28,12 @@ let
     name = "rootfs";
     inherit uwsgi php ttRss uwsgiLogger;
     coreutils = pkgs.coreutils;
-    mimeTypes = pkgs.mime-types + "/etc/mime.types";
+    uwsgiConfig = pkgs.substituteAll {
+        name = "uwsgi.tt-rss.ini";
+        src = ./files/uwsgi.tt-rss.ini.in;
+        mimeTypes = pkgs.mime-types + "/etc/mime.types";
+        inherit ttRss php uwsgiLogger;
+    };
 
     buildCommand = ''
         # prepare the portable service file-system layout
@@ -40,7 +45,6 @@ let
 
         # create empty directories as mount points for the services
         mkdir -p $out/var/lib/tt-rss $out/etc/ssl/certs
-        substituteAll ${./files/tt-rss.ini.in} $out/etc/tt-rss.ini
         substituteAll ${./files/tt-rss-update.service.in} $out/etc/systemd/system/tt-rss-update.service
         substituteAll ${./files/tt-rss.service.in} $out/etc/systemd/system/tt-rss.service
         cp ${./files/tt-rss.socket} $out/etc/systemd/system/tt-rss.socket
