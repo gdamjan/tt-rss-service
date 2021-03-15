@@ -41,9 +41,11 @@ let
         touch $out/etc/resolv.conf $out/etc/machine-id
         cp ${./files/os-release} $out/etc/os-release
 
-        # global /usr/bin/php symlink for the update daemon
+        # global /usr/bin/php and bash symlinks for the update daemon
         mkdir -p $out/usr/bin
         ln -s ${php}/bin/php $out/usr/bin/php
+        ln -s ${pkgs.bash}/bin/bash $out/usr/bin/sh
+        ln -s $out/usr/bin/ $out/bin
 
         # create the mount-point for the cert store
         mkdir -p $out/etc/ssl/certs
