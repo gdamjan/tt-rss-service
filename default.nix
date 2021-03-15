@@ -24,17 +24,17 @@ let
     php = php;
   };
 
+  uwsgiConfig = pkgs.substituteAll {
+    name = "uwsgi.tt-rss.ini";
+    src = ./files/uwsgi.tt-rss.ini.in;
+    mimeTypes = pkgs.mime-types + "/etc/mime.types";
+    inherit ttRss php uwsgiLogger;
+  };
+
   rootfs = pkgs.stdenv.mkDerivation {
     name = "rootfs";
-    inherit uwsgi php ttRss;
+    inherit uwsgi php ttRss uwsgiConfig;
     coreutils = pkgs.coreutils;
-    uwsgiConfig = pkgs.substituteAll {
-        name = "uwsgi.tt-rss.ini";
-        src = ./files/uwsgi.tt-rss.ini.in;
-        mimeTypes = pkgs.mime-types + "/etc/mime.types";
-        inherit ttRss php uwsgiLogger;
-    };
-
     buildCommand = ''
         # prepare the portable service file-system layout
         mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp $out/var/lib
