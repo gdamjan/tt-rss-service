@@ -37,14 +37,18 @@ let
 
     buildCommand = ''
         # prepare the portable service file-system layout
-        mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp $out/usr/bin
+        mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp $out/var/lib
         touch $out/etc/resolv.conf $out/etc/machine-id
         cp ${./files/os-release} $out/etc/os-release
-        ln -s ${php}/bin/php $out/usr/bin/php
-        ln -s usr/bin $out/bin
 
-        # create empty directories as mount points for the services
-        mkdir -p $out/var/lib/tt-rss $out/etc/ssl/certs
+        # global /usr/bin/php symlink for the update daemon
+        mkdir -p $out/usr/bin
+        ln -s ${php}/bin/php $out/usr/bin/php
+
+        # create the mount-point for the cert store
+        mkdir -p $out/etc/ssl/certs
+
+        # setup systemd units
         substituteAll ${./files/tt-rss-update.service.in} $out/etc/systemd/system/tt-rss-update.service
         substituteAll ${./files/tt-rss.service.in} $out/etc/systemd/system/tt-rss.service
         cp ${./files/tt-rss.socket} $out/etc/systemd/system/tt-rss.socket

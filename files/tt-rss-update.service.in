@@ -8,11 +8,12 @@ DynamicUser=yes
 User=tt-rss
 
 BindReadOnlyPaths=/etc/ssl/certs/
+TemporaryFileSystem=/var/lib
 StateDirectory=tt-rss
 Environment=TTRSS_ICONS_DIR=/var/lib/tt-rss/feed-icons
 Environment=TTRSS_CACHE_DIR=/var/lib/tt-rss/cache
 Environment=TTRSS_LOCK_DIRECTORY=/var/lib/tt-rss/lock
-EnvironmentFile=/etc/tt-rss/config.env
+EnvironmentFile=/etc/default/tt-rss.conf
 
 ExecStart=@php@/bin/php @ttRss@/update_daemon2.php
 Restart=always
