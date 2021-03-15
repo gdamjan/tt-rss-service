@@ -24,9 +24,9 @@ let
     php = php;
   };
 
-  rootfs = pkgs.stdenv.mkDerivation rec {
+  rootfs = pkgs.stdenv.mkDerivation {
     name = "rootfs";
-    inherit uwsgi php ttRss uwsgiLogger;
+    inherit uwsgi php ttRss;
     coreutils = pkgs.coreutils;
     uwsgiConfig = pkgs.substituteAll {
         name = "uwsgi.tt-rss.ini";
