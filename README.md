@@ -1,6 +1,6 @@
 [![Build Status](https://github.com/gdamjan/tt-rss-service/workflows/Make%20a%20release/badge.svg)](https://github.com/gdamjan/tt-rss-service/actions)
 
-# `TinyTiny RSS as a systemd portable service`
+# `Tiny Tiny RSS` as a systemd portable service
 
 This portable service image comes with:
 * [Tiny Tiny RSS](https://tt-rss.org/)
