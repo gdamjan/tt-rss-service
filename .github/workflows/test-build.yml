@@ -16,3 +16,10 @@ jobs:
         nix_path: nixpkgs=channel:nixos-21.05
 
     - run: nix-build
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: tt-rss.raw
+        path: result
+        retention-days: 5
