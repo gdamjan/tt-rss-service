@@ -1,4 +1,5 @@
-[![Build Status](https://github.com/gdamjan/tt-rss-service/workflows/Make%20a%20release/badge.svg)](https://github.com/gdamjan/tt-rss-service/actions)
+[![CI](https://github.com/gdamjan/tt-rss-service/actions/workflows/ci.yml/badge.svg)](https://github.com/gdamjan/tt-rss-service/actions/workflows/ci.yml)
+[![Release](https://github.com/gdamjan/tt-rss-service/actions/workflows/release.yml/badge.svg)](https://github.com/gdamjan/tt-rss-service/actions/workflows/release.yml)
 
 # `Tiny Tiny RSS` as a systemd portable service
 
