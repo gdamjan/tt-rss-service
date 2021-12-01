@@ -82,6 +82,7 @@ pkgs.stdenv.mkDerivation {
 
       # and now add the rootfs layout
       mksquashfs ${rootfs} $out \
+        -recovery-path $TMPDIR \
         -all-root -root-mode 755
   '';
 }
