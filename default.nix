@@ -77,7 +77,6 @@ pkgs.stdenv.mkDerivation {
         -noappend \
         -keep-as-directory \
         -all-root -root-mode 755 \
-        -b 1048576 -comp ${squash-compression} \
-        -ef ${./exclude.list} -wildcards
+        -b 1048576 -comp ${squash-compression}
   '';
 }
