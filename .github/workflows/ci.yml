@@ -20,8 +20,7 @@ jobs:
 
     - uses: cachix/install-nix-action@v14
       with:
-        #nix_path: nixpkgs=channel:nixos-21.11
-        nix_path: nixpkgs=https://github.com/gdamjan/nixpkgs/archive/nixos-21.11/uwsgi-php8-fix.tar.gz
+        nix_path: nixpkgs=channel:nixos-21.11
 
     - run: nix-build
 
