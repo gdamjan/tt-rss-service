@@ -24,6 +24,7 @@ ExecStartPre=@coreutils@/bin/mkdir -p \
         /var/lib/tt-rss/cache/export \
         /var/lib/tt-rss/feed-icons
 
+ExecStartPre=-@php@/bin/php @ttRss@/update.php --update-schema=force-yes
 ExecStart=@uwsgi@/bin/uwsgi --ini @uwsgiConfig@
 Restart=always
 
