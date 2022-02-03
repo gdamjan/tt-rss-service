@@ -15,7 +15,7 @@ let
     systemdSupport = false;
     apxs2Support = false;
   }).withExtensions ({ all, ... }: with all;
-    [ pdo pdo_pgsql pcntl posix filter mbstring fileinfo iconv intl dom json curl gd opcache session ]);
+    [ pdo pdo_pgsql pcntl posix filter mbstring fileinfo iconv intl dom curl gd opcache session ]);
 
   uwsgi = pkgs.uwsgi.override {
     withPAM = false;
@@ -73,15 +73,10 @@ pkgs.stdenv.mkDerivation {
       done
 
       # archive the nix store
-      mksquashfs nix $out \
+      mksquashfs nix ${rootfs}/* $out \
         -noappend \
         -keep-as-directory \
         -all-root -root-mode 755 \
-        -b 1048576 -comp ${squash-compression} \
-        -ef ${./exclude.list} -wildcards
-
-      # and now add the rootfs layout
-      mksquashfs ${rootfs} $out \
-        -all-root -root-mode 755
+        -b 1048576 -comp ${squash-compression}
   '';
 }
