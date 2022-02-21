@@ -9,7 +9,6 @@ Type=notify
 DynamicUser=yes
 User=tt-rss
 
-BindReadOnlyPaths=/etc/ssl/certs/
 TemporaryFileSystem=/var/lib
 StateDirectory=tt-rss
 Environment=TTRSS_ICONS_DIR=/var/lib/tt-rss/feed-icons

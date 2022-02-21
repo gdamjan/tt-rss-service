@@ -1,6 +1,0 @@
-PORTABLE_PRETTY_NAME="Portable TinyTiny RSS with uwsgi-php"
-PORTABLE_ID=tt-rss
-PRETTY_NAME=NixOS
-ID=nixos
-BUILD_ID=rolling
-HOME_URL=https://github.com/gdamjan/tt-rss-service/
