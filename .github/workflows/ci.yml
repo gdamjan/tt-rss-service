@@ -8,15 +8,12 @@ on:
     branches:
       - main
 
-env:
-  ARTIFACT_NAME: tt-rss_test
-
 jobs:
   build:
     name: build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - uses: cachix/install-nix-action@v17
       with:
@@ -24,13 +21,9 @@ jobs:
 
     - run: nix-build
 
-    - name: Prepare artifact
-      run: cp result ${{ env.ARTIFACT_NAME }}.raw
-
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.ARTIFACT_NAME }}
-        path: ${{ env.ARTIFACT_NAME }}.raw
+        path: result/tt-rss_*.raw
         if-no-files-found: error
         retention-days: 5
