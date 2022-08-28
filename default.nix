@@ -1,7 +1,6 @@
 { pkgs ? import <nixpkgs> {}, withSystemd ? true }:
 
 let
-  uwsgiLogger = if withSystemd then "systemd" else "stdio";
 
   ttRss = (import ./tt-rss.nix { inherit pkgs; });
 
@@ -21,14 +20,15 @@ let
     withSystemd = withSystemd;
     systemd = pkgs.systemdMinimal;
     plugins = ["php"];
-    php = php;
+    inherit php;
   };
 
   uwsgiConfig = pkgs.substituteAll {
     name = "uwsgi.tt-rss.ini";
     src = ./files/uwsgi.tt-rss.ini.in;
-    mimeTypes = pkgs.mime-types + "/etc/mime.types";
-    inherit ttRss php uwsgiLogger;
+    mimeTypes = "${pkgs.mime-types}/etc/mime.types";
+    uwsgiLogger = if withSystemd then "systemd" else "stdio";
+    inherit php ttRss;
   };
 
   tt-rss-service = pkgs.substituteAll {
