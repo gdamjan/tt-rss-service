@@ -15,7 +15,7 @@ let
     systemdSupport = false;
     apxs2Support = false;
   }).withExtensions ({ all, ... }: with all;
-    [ pdo pdo_pgsql pcntl posix filter mbstring fileinfo iconv intl dom curl gd opcache session ]);
+    [ pdo pdo_pgsql pcntl posix filter ctype mbstring fileinfo iconv intl dom curl gd opcache session ]);
 
   uwsgi = pkgs.uwsgi.override {
     withPAM = false;
