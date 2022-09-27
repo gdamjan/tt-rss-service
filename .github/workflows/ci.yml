@@ -19,9 +19,9 @@ jobs:
 
     - uses: cachix/install-nix-action@v17
       with:
-        nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/master.tar.gz
+        nix_path: nixpkgs=channel:nixos-unstable
 
-    - run: nix-build
+    - run: nix-build --arg withSystemd false
 
     - name: Prepare artifacts
       run: |
