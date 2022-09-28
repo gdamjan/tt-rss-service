@@ -29,8 +29,8 @@ jobs:
 
     - name: Prepare artifacts
       run: |
-        cp result/${ARTIFACT_PREFIX}_*.raw ./
-        sh -c 'sha256sum $0 > $0.sha256' ${ARTIFACT_PREFIX}_*.raw
+        cp result/${{ env.ARTIFACT_PREFIX}}_*.raw ./
+        sh -c 'sha256sum $0 > $0.sha256' ${{ env.ARTIFACT_PREFIX }}_*.raw
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
