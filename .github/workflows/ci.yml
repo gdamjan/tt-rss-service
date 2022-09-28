@@ -11,7 +11,7 @@ on:
       - main
 
 env:
-    ARTIFACT_PREFIX: tt-rss
+  ARTIFACT_PREFIX: tt-rss
 
 jobs:
   build:
