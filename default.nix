@@ -1,8 +1,6 @@
 { pkgs ? import <nixpkgs> {}, withSystemd ? true }:
 
 let
-  squash-compression = "xz -Xdict-size 100%";
-  uwsgiLogger = if withSystemd then "systemd" else "stdio";
 
   ttRss = (import ./tt-rss.nix { inherit pkgs; });
 
@@ -22,61 +20,44 @@ let
     withSystemd = withSystemd;
     systemd = pkgs.systemdMinimal;
     plugins = ["php"];
-    php = php;
+    inherit php;
   };
 
   uwsgiConfig = pkgs.substituteAll {
     name = "uwsgi.tt-rss.ini";
     src = ./files/uwsgi.tt-rss.ini.in;
-    mimeTypes = pkgs.mime-types + "/etc/mime.types";
-    inherit ttRss php uwsgiLogger;
+    mimeTypes = "${pkgs.mime-types}/etc/mime.types";
+    uwsgiLogger = if withSystemd then "systemd" else "stdio";
+    inherit php ttRss;
   };
 
-  rootfs = pkgs.stdenv.mkDerivation {
-    name = "rootfs";
-    inherit uwsgi php ttRss uwsgiConfig;
-    coreutils = pkgs.coreutils;
-    buildCommand = ''
-        # prepare the portable service file-system layout
-        mkdir -p $out/etc/systemd/system $out/proc $out/sys $out/dev $out/run $out/tmp $out/var/tmp $out/var/lib
-        touch $out/etc/resolv.conf $out/etc/machine-id
-        cp ${./files/os-release} $out/etc/os-release
-
-        # global /usr/bin/php and bash symlinks for the update daemon
-        mkdir -p $out/usr/bin
-        ln -s ${php}/bin/php $out/usr/bin/php
-        ln -s ${pkgs.bash}/bin/bash $out/usr/bin/sh
-        ln -s $out/usr/bin/ $out/bin
-
-        # create the mount-point for the cert store
-        mkdir -p $out/etc/ssl/certs
-
-        # setup systemd units
-        substituteAll ${./files/tt-rss-update.service.in} $out/etc/systemd/system/tt-rss-update.service
-        substituteAll ${./files/tt-rss.service.in} $out/etc/systemd/system/tt-rss.service
-        cp ${./files/tt-rss.socket} $out/etc/systemd/system/tt-rss.socket
-    '';
+  tt-rss-service = pkgs.substituteAll {
+    name = "tt-rss.service";
+    src = ./files/tt-rss.service.in;
+    inherit php ttRss uwsgi uwsgiConfig;
+    inherit (pkgs) coreutils;
   };
 
+  tt-rss-update-service = pkgs.substituteAll {
+    name = "tt-rss-update.service";
+    src = ./files/tt-rss-update.service.in;
+    inherit php ttRss;
+  };
+
+  tt-rss-socket = pkgs.concatText "tt-rss.socket" [ ./files/tt-rss.socket ];
 in
 
-pkgs.stdenv.mkDerivation {
-  name = "tt-rss.raw";
-  nativeBuildInputs = [ pkgs.squashfsTools ];
+pkgs.portableService {
+  pname = "tt-rss";
+  version = ttRss.version;
+  description = ''Portable "Tiny Tiny Rss" service run by uwsgi-php and built with Nix'';
+  homepage = "https://github.com/gdamjan/tt-rss-service/";
 
-  buildCommand = ''
-      closureInfo=${pkgs.closureInfo { rootPaths = [ rootfs ]; }}
+  units = [ tt-rss-service tt-rss-update-service tt-rss-socket ];
 
-      mkdir -p nix/store
-      for i in $(< $closureInfo/store-paths); do
-        cp -a "$i" "''${i:1}"
-      done
-
-      # archive the nix store
-      mksquashfs nix ${rootfs}/* $out \
-        -noappend \
-        -keep-as-directory \
-        -all-root -root-mode 755 \
-        -b 1048576 -comp ${squash-compression}
-  '';
+  symlinks = [
+    { object = "${pkgs.cacert}/etc/ssl"; symlink = "/etc/ssl"; }
+    { object = "${pkgs.bash}/bin/bash"; symlink = "/bin/sh"; }
+    { object = "${php}/bin/php"; symlink = "/bin/php"; }
+  ];
 }
