@@ -6,7 +6,7 @@ die-on-term = true
 logger = @uwsgiLogger@
 
 mime-file = @mimeTypes@
-site-root = @ttRss@
+site-root = @siteRoot@
 chdir = %(site-root)
 
 static-check = %(site-root)
