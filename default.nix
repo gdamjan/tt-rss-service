@@ -27,7 +27,7 @@ let
     src = ./files/uwsgi.tt-rss.ini.in;
     mimeTypes = "${pkgs.mime-types}/etc/mime.types";
     uwsgiLogger = if withSystemd then "systemd" else "stdio";
-    inherit php ttRss;
+    siteRoot = ttRss;
   };
 
   tt-rss-service = pkgs.substituteAll {

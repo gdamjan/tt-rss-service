@@ -6,7 +6,7 @@ die-on-term = true
 logger = @uwsgiLogger@
 
 mime-file = @mimeTypes@
-site-root = @ttRss@
+site-root = @siteRoot@
 chdir = %(site-root)
 
 static-check = %(site-root)
@@ -17,7 +17,6 @@ static-skip-ext = .inc
 offload-threads = 2
 
 plugins = 0:php
-php-ini = @php@/lib/php.ini
 php-docroot = %(site-root)
 php-index = index.php
 php-allowed-ext = .php
