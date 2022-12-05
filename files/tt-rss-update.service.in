@@ -15,7 +15,8 @@ Environment=TTRSS_LOCK_DIRECTORY=/var/lib/tt-rss/lock
 EnvironmentFile=/etc/default/tt-rss.conf
 
 ExecStart=@php@/bin/php @ttRss@/update_daemon2.php
-Restart=always
+Restart=on-failure
+SyslogIdentifier=%N
 
 [Install]
 WantedBy=multi-user.target
