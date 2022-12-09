@@ -57,6 +57,6 @@ pkgs.portableService {
   symlinks = [
     { object = "${pkgs.cacert}/etc/ssl"; symlink = "/etc/ssl"; }
     { object = "${pkgs.bash}/bin/bash"; symlink = "/bin/sh"; }
-    { object = "${php}/bin/php"; symlink = "/bin/php"; }
+    { object = "${php}/bin/php"; symlink = "/usr/bin/php"; }
   ];
 }
