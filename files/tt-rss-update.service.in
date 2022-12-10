@@ -9,6 +9,7 @@ User=tt-rss
 
 TemporaryFileSystem=/var/lib
 StateDirectory=tt-rss
+Environment=SSL_CERT_FILE=/etc/ssl/certs/ca-bundle.crt
 Environment=TTRSS_ICONS_DIR=/var/lib/tt-rss/feed-icons
 Environment=TTRSS_CACHE_DIR=/var/lib/tt-rss/cache
 Environment=TTRSS_LOCK_DIRECTORY=/var/lib/tt-rss/lock
