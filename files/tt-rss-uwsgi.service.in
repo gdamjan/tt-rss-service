@@ -26,7 +26,7 @@ ExecStartPre=@coreutils@/bin/mkdir -p \
 
 ExecStartPre=-@php@/bin/php @ttRss@/update.php --update-schema=force-yes
 ExecStart=@uwsgi@/bin/uwsgi --ini @uwsgiConfig@
-Restart=always
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
