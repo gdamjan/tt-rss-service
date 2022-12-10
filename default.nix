@@ -31,8 +31,8 @@ let
   };
 
   tt-rss-service = pkgs.substituteAll {
-    name = "tt-rss.service";
-    src = ./files/tt-rss.service.in;
+    name = "tt-rss-uwsgi.service";
+    src = ./files/tt-rss-uwsgi.service.in;
     inherit php ttRss uwsgi uwsgiConfig;
     inherit (pkgs) coreutils;
   };
@@ -43,7 +43,7 @@ let
     inherit php ttRss;
   };
 
-  tt-rss-socket = pkgs.concatText "tt-rss.socket" [ ./files/tt-rss.socket ];
+  tt-rss-socket = pkgs.concatText "tt-rss-uwsgi.socket" [ ./files/tt-rss-uwsgi.socket ];
 in
 
 pkgs.portableService {
