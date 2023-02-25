@@ -21,8 +21,8 @@ jobs:
 
     - uses: cachix/install-nix-action@v22
 
-    - run: nix build
-    - run: nix flake check
+    - run: nix build --no-update-lock-file
+    - run: nix flake check --no-update-lock-file
 
     - name: Prepare artifacts
       run: |
