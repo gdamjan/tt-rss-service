@@ -3,10 +3,11 @@
 
   inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-22.11;
 
-  outputs = { self, nixpkgs, ... }: rec {
-    pkgs = import nixpkgs { system = "x86_64-linux"; };
-    ttRss = (import ./tt-rss.nix { inherit pkgs; });
-
-    packages.x86_64-linux.default = (import ./build.nix { inherit pkgs ttRss; });
-  };
+  outputs = { self, nixpkgs, ... }:
+    let
+      pkgs = import nixpkgs { system = "x86_64-linux"; };
+      ttRss = (import ./tt-rss.nix { inherit pkgs; });
+    in {
+      packages.x86_64-linux.default = (import ./build.nix { inherit pkgs ttRss; });
+    };
 }
