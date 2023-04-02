@@ -8,6 +8,6 @@
       pkgs = import nixpkgs { system = "x86_64-linux"; };
       ttRss = (import ./tt-rss.nix { inherit pkgs; });
     in {
-      packages.x86_64-linux.default = (import ./build.nix { inherit pkgs ttRss; });
+      packages.x86_64-linux.default = (import ./build.nix { inherit pkgs ttRss; withSystemd = false; });
     };
 }
