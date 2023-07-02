@@ -1,13 +1,12 @@
 [Unit]
 Description=tt-rss uwsgi service
-Requires=tt-rss-uwsgi.socket
-After=tt-rss-uwsgi.socket
 Before=tt-rss-update.service
 
 [Service]
 Type=notify
 DynamicUser=yes
 User=tt-rss
+Sockets=tt-rss-uwsgi.socket
 
 TemporaryFileSystem=/var/lib
 StateDirectory=tt-rss
