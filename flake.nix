@@ -1,7 +1,7 @@
 {
   description = ''Portable "Tiny Tiny Rss" service run by uwsgi-php and built with Nix'';
 
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-22.11;
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-23.11;
 
   outputs = { self, nixpkgs, ... }:
     let
