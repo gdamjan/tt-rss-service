@@ -1,8 +1,6 @@
-{ pkgs ? import <nixpkgs> {}, withSystemd ? true }:
+{ pkgs, ttRss, withSystemd ? true }:
 
 let
-
-  ttRss = (import ./tt-rss.nix { inherit pkgs; });
 
   php = (pkgs.php.override {
     embedSupport = true;
