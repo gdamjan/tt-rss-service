@@ -1,10 +1,14 @@
 { pkgs }:
 
-pkgs.stdenv.mkDerivation rec {
+let
+  tt-rss-plugin-readability = import ./tt-rss-readability.nix { pkgs=pkgs; };
+
+in
+  pkgs.stdenv.mkDerivation rec {
     pname = "tt-rss";
-    version = "2022-12-02";
-    rev = "fa9c614ff144153ca1f4c0744fe0bc7d8f3a82ad";
-    sha256 = "sha256-m3MV/2m1bXDJfHBbI9bZRXeQehaPYDVQ46vyJLX7a7I=";
+    version = "2024-04-21";
+    rev = "d832907125a7711397da8ade5cfb51082d802542";
+    sha256 = "sha256-XxwBMKnj+8bTVN0h7+sGYTZMvhD4pr0S02jiV21kqR8=";
 
     src = pkgs.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
@@ -13,7 +17,9 @@ pkgs.stdenv.mkDerivation rec {
 
     installPhase = ''
       mkdir -p $out/
-      cp -R * $out/
+      cp -a * $out/
       echo ${version}-${builtins.substring 0 8 rev} > $out/version_static.txt
+
+      cp -a ${tt-rss-plugin-readability}/* $out/plugins/
     '';
-}
+  }
