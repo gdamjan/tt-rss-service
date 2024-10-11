@@ -6,13 +6,13 @@ let
 in
   pkgs.stdenv.mkDerivation rec {
     pname = "tt-rss";
-    version = "2024-04-21";
-    rev = "d832907125a7711397da8ade5cfb51082d802542";
-    sha256 = "sha256-XxwBMKnj+8bTVN0h7+sGYTZMvhD4pr0S02jiV21kqR8=";
+    version = "2024-10-10";
+    rev = "468f464b486e2ed0527cfd7e80113d37cdd4d07c";
+    hash = "sha256-aCBi8moCxfDuRyizZkVlvbQEQKq2ZasZEbG5/EuovPE=";
 
     src = pkgs.fetchgit {
       url = "https://git.tt-rss.org/fox/tt-rss.git";
-      inherit sha256 rev;
+      inherit hash rev;
     };
 
     installPhase = ''
