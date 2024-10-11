@@ -23,10 +23,10 @@ All state will be kept in the database and `/var/lib/private/tt-rss`.
 
 ## Quick Start
 
-Get the latest image from [Github releases](https://github.com/gdamjan/tt-rss-service/releases/), into
-`/var/lib/portables` and then run:
+Get the latest image from [Github releases](https://github.com/gdamjan/tt-rss-service/releases/), into /var/lib/portables, then attach the portable service, and enable/start it. For ex:
 
 ```sh
+importctl pull-raw --class=portable --verify=checksum https://github.com/gdamjan/tt-rss-service/releases/download/v<version>/tt-rss_<version>.raw # or use curl
 portablectl inspect tt-rss…
 portablectl attach --enable --now tt-rss…
 ```
