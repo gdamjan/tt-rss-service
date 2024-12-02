@@ -10,9 +10,6 @@ on:
     branches:
       - main
 
-env:
-  ARTIFACT_PREFIX: tt-rss
-
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -26,8 +23,8 @@ jobs:
 
     - name: Prepare artifacts
       run: |
-        cp result/${{ env.ARTIFACT_PREFIX}}_*.raw ./
-        sh -c 'sha256sum $0 > $0.sha256' ${{ env.ARTIFACT_PREFIX }}_*.raw
+        cp result/*.raw ./
+        sh -c 'sha256sum $0 > $0.sha256' *.raw
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
@@ -35,12 +32,13 @@ jobs:
         if-no-files-found: error
         retention-days: 5
         path: |
-          ${{ env.ARTIFACT_PREFIX }}_*.raw
-          ${{ env.ARTIFACT_PREFIX }}_*.raw.sha256
-        name: ${{ env.ARTIFACT_PREFIX }}
+          *.raw
+          *.raw.sha256
 
     - name: Release Info
-      run: nix build --no-update-lock-file .#release-info
+      run: |
+        nix build --no-update-lock-file -o release-info .#release-info
+        cat release-info
 
     - name: Create a github release from tag
       if: startsWith(github.ref, 'refs/tags/v')
@@ -48,6 +46,6 @@ jobs:
       with:
         prerelease: true
         files: |
-          ${{ env.ARTIFACT_PREFIX }}_*.raw
-          ${{ env.ARTIFACT_PREFIX }}_*.raw.sha256
-        body_path: result
+          *.raw
+          *.raw.sha256
+        body_path: release-info
