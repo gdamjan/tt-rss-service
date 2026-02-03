@@ -20,24 +20,18 @@ let
     inherit php withSystemd;
   };
 
-  uwsgiConfig = pkgs.substituteAll {
-    name = "uwsgi.tt-rss.ini";
-    src = ./files/uwsgi.tt-rss.ini.in;
-    mimeTypes = "${pkgs.mime-types}/etc/mime.types";
+  uwsgiConfig = pkgs.replaceVars ./files/uwsgi.tt-rss.ini.in {
+    mimeTypes = "${pkgs.mailcap}/etc/mime.types";
     uwsgiLogger = if withSystemd then "systemd" else "stdio";
     siteRoot = ttRss;
   };
 
-  tt-rss-service = pkgs.substituteAll {
-    name = "tt-rss-uwsgi.service";
-    src = ./files/tt-rss-uwsgi.service.in;
+  tt-rss-service = pkgs.replaceVars ./files/tt-rss-uwsgi.service.in {
     inherit php ttRss uwsgi uwsgiConfig;
     inherit (pkgs) coreutils;
   };
 
-  tt-rss-update-service = pkgs.substituteAll {
-    name = "tt-rss-update.service";
-    src = ./files/tt-rss-update.service.in;
+  tt-rss-update-service = pkgs.replaceVars ./files/tt-rss-update.service.in {
     inherit php ttRss;
   };
 
