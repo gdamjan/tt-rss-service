@@ -2,12 +2,13 @@
 
 pkgs.stdenv.mkDerivation rec {
   pname = "tt-rss-plugin-readability";
-  version = "unstable-2024-06-13";
+  version = "unstable-2025-10-16";
 
-  src = pkgs.fetchgit {
-    url    = "https://git.tt-rss.org/fox/ttrss-af-readability.git";
-    rev = "6fa51adb5e663fe01d7d01f75f8029393f3fbc2e";
-    hash = "sha256-b0nmOTld789Civw43XgQ0SBv1MyNHiMsv7bZSUiMBfU=";
+  src = pkgs.fetchFromGitHub {
+    owner = "tt-rss";
+    repo = "tt-rss-plugin-af-readability";
+    rev = "fce528aa69c2a7193fb7eb3a3cd9dd17885d6ab6";
+    hash = "sha256-3rxrICtm6+ujlBHj5Su2sSEq3lgiHhQMJ/OVfzhzYXA=";
   };
 
   dontBuild = true;
