@@ -14,9 +14,9 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
-    - uses: cachix/install-nix-action@v30
+    - uses: cachix/install-nix-action@v31
 
     - run: nix build --no-update-lock-file
     - run: nix flake check --no-update-lock-file
@@ -27,7 +27,7 @@ jobs:
         sh -c 'sha256sum $0 > $0.sha256' *.raw
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         if-no-files-found: error
         retention-days: 5
