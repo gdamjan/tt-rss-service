@@ -2,13 +2,13 @@
 
 pkgs.stdenv.mkDerivation rec {
   pname = "tt-rss-plugin-readability";
-  version = "unstable-2025-10-16";
+  version = "unstable-2026-08-04";
 
   src = pkgs.fetchFromGitHub {
     owner = "tt-rss";
     repo = "tt-rss-plugin-af-readability";
-    rev = "fce528aa69c2a7193fb7eb3a3cd9dd17885d6ab6";
-    hash = "sha256-3rxrICtm6+ujlBHj5Su2sSEq3lgiHhQMJ/OVfzhzYXA=";
+    rev = "c5412fd92eee49db589eff668e9cc8839bc16fcf";
+    hash = "sha256-OX1sc20upo3DxD4FALxqFSS1FUBCrAQkH0kLg+otivU=";
   };
 
   dontBuild = true;

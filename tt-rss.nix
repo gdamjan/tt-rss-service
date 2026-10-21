@@ -6,9 +6,9 @@ let
 in
   pkgs.stdenv.mkDerivation rec {
     pname = "tt-rss";
-    version = "2026-01-28";
-    rev = "c625ca6b7c6950580c68a70594894d1755d2badf";
-    hash = "sha256-VI3SNDrktTK6I3WC2aBraTZXOexLo0Tj7wkKuMvYVXU=";
+    version = "2026-10-18";
+    rev = "86c8385985fa6c91eb3b4d539a9852372db33b61";
+    hash = "sha256-OX1sc20upo3DxD4FALxqFSS1FUBCrAQkH0kLg+otivU=";
 
     src = pkgs.fetchFromGitHub {
       owner = "tt-rss";
